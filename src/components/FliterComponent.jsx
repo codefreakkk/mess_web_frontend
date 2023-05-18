@@ -36,7 +36,7 @@ function FliterComponent() {
           </div>
           <div className="button ml-10">
             <button type="button" class="btn btn-primary">
-              Submit
+              Search
             </button>
           </div>
           <div className="button ml-10">

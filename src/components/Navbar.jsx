@@ -1,7 +1,26 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 function Navbar() {
+  const navigate = useNavigate();
+
+  const [loginState, setLoginState] = useState(true);
+
+  useEffect(() => {
+    if (
+      localStorage.getItem("mess_token") == null ||
+      localStorage.getItem("mess_email") == null
+    ) {
+      navigate("/signin");
+      setLoginState(false);
+    }
+  }, []);
+
+  function handleLogout() {
+    localStorage.clear();
+    navigate("/signin");
+  }
+
   return (
     <>
       <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -32,7 +51,7 @@ function Navbar() {
               <Link to={`/addusers`} style={{ textDecoration: "none" }}>
                 <li class="nav-item">
                   <a class="nav-link active" aria-current="page" href="#">
-                    Add customer
+                    Add User
                   </a>
                 </li>
               </Link>
@@ -44,11 +63,28 @@ function Navbar() {
                 </li>
               </Link>
             </ul>
-            <div class="d-flex">
-              <button class="btn btn-primary" type="submit">
-                Logout
-              </button>
-            </div>
+            {loginState === false ? (
+              <>
+                <Link to={`/signin`} style={{ textDecorationL: "none" }}>
+                  <div class="d-flex">
+                    <button class="btn btn-primary" type="button">
+                      Sign In
+                    </button>
+                  </div>
+                </Link>
+                <div class="d-flex ml-10">
+                  <button class="btn btn-primary" type="button">
+                    Sign Up
+                  </button>
+                </div>
+              </>
+            ) : (
+              <div class="d-flex">
+                <button class="btn btn-primary" type="button" onClick={handleLogout}>
+                  Logout
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </nav>

@@ -10,6 +10,8 @@ function Addusers() {
   const [profile, setProfile] = useState(null);
   const [state, setState] = useState(false);
   const [alertMsg, setAlertMsg] = useState("");
+  const [tiffinAmount, setTiffinAmount] = useState("0");
+  const [tiffinCount, setTiffinCount] = useState("0");
 
   function handleProfile(e) {
     setProfile(e.target.files[0]);
@@ -29,6 +31,7 @@ function Addusers() {
       url: "http://localhost:8000/api/v1/signup",
       headers: {
         "Content-Type": "multipart/form-data",
+        Authorization: localStorage.getItem("mess_token"),
       },
       data: {
         u_name: name,
@@ -36,6 +39,8 @@ function Addusers() {
         u_password: password,
         u_contact: contact,
         profile,
+        tiffin_type: tiffinAmount,
+        tiffin_count: tiffinCount,
       },
     })
       .then((res) => {
@@ -126,6 +131,33 @@ function Addusers() {
               onChange={handleProfile}
               aria-describedby="emailHelp"
             />
+
+            <div class="mb-3 mt-3">
+              <label for="exampleInputEmail1" class="form-label">
+                Tiffin Amount per plate
+              </label>
+              <input
+                type="text"
+                class="form-control"
+                id="exampleInputEmail1"
+                value={tiffinAmount}
+                onChange={(e) => setTiffinAmount(e.target.value)}
+                aria-describedby="emailHelp"
+              />
+            </div>
+            <div class="mb-3 mt-3">
+              <label for="exampleInputEmail1" class="form-label">
+                Tiffin Count
+              </label>
+              <input
+                type="number"
+                class="form-control"
+                id="exampleInputEmail1"
+                value={tiffinCount}
+                onChange={(e) => setTiffinCount(e.target.value)}
+                aria-describedby="emailHelp"
+              />
+            </div>
           </div>
           <button type="button" onClick={handleSubmit} class="btn btn-primary">
             Submit

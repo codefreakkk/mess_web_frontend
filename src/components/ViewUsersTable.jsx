@@ -7,7 +7,11 @@ function ViewUsersTable() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/v1/getallusers")
+      .get("http://localhost:8000/api/v1/getallusers", {
+        headers: {
+          Authorization: localStorage.getItem("mess_token")
+        }
+      })
       .then((res) => {
         setUser(res.data.data);
         setState(true);
